@@ -30,6 +30,8 @@ const BRAND = {
   colorDark: "#3d8228",
   colorLight: "#e8f5e2",
   region: "Tutta la Sardegna",
+  privacyUrl: "https://www.iubenda.com/privacy-policy/57932833",
+  cookieUrl: "https://www.iubenda.com/privacy-policy/57932833/cookie-policy",
 };
 
 const VANTAGGI = [
@@ -1323,7 +1325,16 @@ export default function DMInsufflaggio() {
               </button>
 
               <p style={{ fontSize: "0.78rem", color: "#9ca3af", textAlign: "center" }}>
-                I tuoi dati sono al sicuro e non vengono ceduti a terzi.
+                I tuoi dati sono al sicuro e non vengono ceduti a terzi. Consulta la{" "}
+                <a
+                  href={BRAND.privacyUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ color: BRAND.color, textDecoration: "underline" }}
+                >
+                  Privacy Policy
+                </a>
+                .
               </p>
             </form>
           </div>
@@ -1430,6 +1441,24 @@ export default function DMInsufflaggio() {
             fontSize: "0.82rem",
           }}
         >
+          <div style={{ marginBottom: 10 }}>
+            <a
+              href={BRAND.privacyUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: "rgba(255,255,255,0.75)", textDecoration: "none", marginRight: 16 }}
+            >
+              Privacy Policy
+            </a>
+            <a
+              href={BRAND.cookieUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: "rgba(255,255,255,0.75)", textDecoration: "none" }}
+            >
+              Cookie Policy
+            </a>
+          </div>
           © {new Date().getFullYear()} DM Insufflaggio — P.IVA: [da inserire] — Sardegna, Italia
         </div>
       </footer>
