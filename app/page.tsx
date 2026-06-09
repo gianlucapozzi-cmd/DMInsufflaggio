@@ -38,10 +38,26 @@ const IMAGES = {
   hero: "/images/hero-bg.jpg",
   cantiere: "/images/insufflaggio-cantiere.jpg",
   gallery: [
-    { src: "/images/gallery-lavoro.jpg", label: "Lavoro in corso" },
-    { src: "/images/gallery-attrezzatura.jpg", label: "Attrezzatura" },
-    { src: "/images/gallery-risultato.jpg", label: "Risultato finale" },
-    { src: "/images/gallery-team.jpg", label: "Team" },
+    {
+      src: "/images/gallery-lavoro.jpg",
+      label: "Isolamento in intercapedine",
+      alt: "Materiale isolante iniettato nella cavità di una parete",
+    },
+    {
+      src: "/images/gallery-attrezzatura.jpg",
+      label: "Parete in lavorazione",
+      alt: "Intervento di isolamento termico all'interno di una parete",
+    },
+    {
+      src: "/images/gallery-risultato.jpg",
+      label: "Isolamento installato",
+      alt: "Parete con isolante termico posizionato tra le murature",
+    },
+    {
+      src: "/images/gallery-team.jpg",
+      label: "Cantiere isolamento",
+      alt: "Operai al lavoro su un cantiere di isolamento termico",
+    },
   ],
 };
 
@@ -717,7 +733,7 @@ export default function DMInsufflaggio() {
             >
               <img
                 src={IMAGES.cantiere}
-                alt="Cantiere di insufflaggio termico"
+                alt="Edificio in fase di isolamento termico con materiale nelle pareti"
                 style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
               />
               <div
@@ -987,7 +1003,7 @@ export default function DMInsufflaggio() {
                 >
                   <img
                     src={img.src}
-                    alt={img.label}
+                    alt={img.alt}
                     style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
                   />
                 </div>
