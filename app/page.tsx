@@ -34,6 +34,17 @@ const BRAND = {
   cookieUrl: "https://www.iubenda.com/privacy-policy/57932833/cookie-policy",
 };
 
+const IMAGES = {
+  hero: "/images/hero-bg.jpg",
+  cantiere: "/images/insufflaggio-cantiere.jpg",
+  gallery: [
+    { src: "/images/gallery-lavoro.jpg", label: "Lavoro in corso" },
+    { src: "/images/gallery-attrezzatura.jpg", label: "Attrezzatura" },
+    { src: "/images/gallery-risultato.jpg", label: "Risultato finale" },
+    { src: "/images/gallery-team.jpg", label: "Team" },
+  ],
+};
+
 const VANTAGGI = [
   {
     icon: "⚡",
@@ -182,8 +193,41 @@ export default function DMInsufflaggio() {
   }, []);
 
   const scrollTo = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    const el = document.getElementById(id);
+    if (!el) return;
+    const offset = 88;
+    const top = el.getBoundingClientRect().top + window.scrollY - offset;
+    window.scrollTo({ top, behavior: "smooth" });
     setMenuOpen(false);
+  };
+
+  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const nome = String(formData.get("nome") ?? "");
+    const telefono = String(formData.get("telefono") ?? "");
+    const email = String(formData.get("email") ?? "");
+    const comune = String(formData.get("comune") ?? "");
+    const tipo = String(formData.get("tipo") ?? "Non specificato");
+    const messaggio = String(formData.get("messaggio") ?? "");
+
+    const body = [
+      "Richiesta sopralluogo gratuito",
+      "",
+      `Nome: ${nome}`,
+      `Telefono: ${telefono}`,
+      `Email: ${email || "Non indicata"}`,
+      `Comune/Zona: ${comune}`,
+      `Tipo edificio: ${tipo}`,
+      "",
+      messaggio ? `Messaggio:\n${messaggio}` : "",
+    ]
+      .filter(Boolean)
+      .join("\n");
+
+    window.location.href = `mailto:${BRAND.email}?subject=${encodeURIComponent(
+      "Richiesta sopralluogo - DM Insufflaggio"
+    )}&body=${encodeURIComponent(body)}`;
   };
 
   return (
@@ -291,8 +335,49 @@ export default function DMInsufflaggio() {
           content: '';
           position: absolute;
           inset: 0;
-          background: url('/images/hero-bg.jpg') center/cover no-repeat;
+          background: url('${IMAGES.hero}') center/cover no-repeat;
           opacity: 0.18;
+          pointer-events: none;
+        }
+
+        .hero-content {
+          position: relative;
+          z-index: 1;
+        }
+
+        .nav-desktop {
+          display: flex;
+          gap: 32px;
+          align-items: center;
+        }
+
+        .nav-mobile-btn {
+          display: none;
+          background: none;
+          border: none;
+          cursor: pointer;
+          font-size: 1.5rem;
+        }
+
+        .two-col-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 64px;
+          align-items: center;
+        }
+
+        .form-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 16px;
+        }
+
+        #servizi,
+        #come-funziona,
+        #perche-noi,
+        #faq,
+        #contatti {
+          scroll-margin-top: 88px;
         }
 
         .green-line {
@@ -350,6 +435,10 @@ export default function DMInsufflaggio() {
         @media (max-width: 768px) {
           .stat-number { font-size: 2.2rem; }
           .hero-title { font-size: 2.4rem !important; }
+          .nav-desktop { display: none; }
+          .nav-mobile-btn { display: block; }
+          .two-col-grid { grid-template-columns: 1fr; gap: 32px; }
+          .form-grid { grid-template-columns: 1fr; }
         }
       `}</style>
 
@@ -392,10 +481,7 @@ export default function DMInsufflaggio() {
           </a>
 
           {/* Desktop nav */}
-          <div
-            style={{ display: "flex", gap: 32, alignItems: "center" }}
-            className="hidden md:flex"
-          >
+          <div className="nav-desktop">
             {[
               ["Servizi", "servizi"],
               ["Come funziona", "come-funziona"],
@@ -404,6 +490,7 @@ export default function DMInsufflaggio() {
             ].map(([label, id]) => (
               <button
                 key={id}
+                type="button"
                 onClick={() => scrollTo(id)}
                 className="nav-link"
                 style={{ color: scrolled ? "#374151" : "rgba(255,255,255,0.85)" }}
@@ -418,15 +505,11 @@ export default function DMInsufflaggio() {
 
           {/* Mobile hamburger */}
           <button
+            type="button"
             onClick={() => setMenuOpen(!menuOpen)}
-            style={{
-              background: "none",
-              border: "none",
-              cursor: "pointer",
-              color: scrolled ? "#111" : "white",
-              fontSize: "1.5rem",
-            }}
-            className="md:hidden"
+            className="nav-mobile-btn"
+            style={{ color: scrolled ? "#111" : "white" }}
+            aria-label={menuOpen ? "Chiudi menu" : "Apri menu"}
           >
             {menuOpen ? "✕" : "☰"}
           </button>
@@ -450,7 +533,7 @@ export default function DMInsufflaggio() {
               ["Perché noi", "perche-noi"],
               ["FAQ", "faq"],
             ].map(([label, id]) => (
-              <button key={id} onClick={() => scrollTo(id)} className="nav-link" style={{ textAlign: "left" }}>
+              <button key={id} type="button" onClick={() => scrollTo(id)} className="nav-link" style={{ textAlign: "left" }}>
                 {label}
               </button>
             ))}
@@ -467,6 +550,7 @@ export default function DMInsufflaggio() {
         style={{ minHeight: "100vh", display: "flex", alignItems: "center", paddingTop: 80 }}
       >
         <div
+          className="hero-content"
           style={{
             maxWidth: 1200,
             margin: "0 auto",
@@ -523,10 +607,16 @@ export default function DMInsufflaggio() {
             </p>
 
             <div style={{ display: "flex", gap: 16, flexWrap: "wrap", alignItems: "center" }}>
-              <a href="#contatti" className="btn-primary" style={{ fontSize: "1.05rem", padding: "16px 36px" }}>
-                Richiedi sopralluogo gratuito
-              </a>
               <button
+                type="button"
+                onClick={() => scrollTo("contatti")}
+                className="btn-primary"
+                style={{ fontSize: "1.05rem", padding: "16px 36px" }}
+              >
+                Richiedi sopralluogo gratuito
+              </button>
+              <button
+                type="button"
                 onClick={() => scrollTo("come-funziona")}
                 className="btn-outline"
                 style={{
@@ -616,37 +706,20 @@ export default function DMInsufflaggio() {
       {/* ── COS'È L'INSUFFLAGGIO ── */}
       <section id="servizi" style={{ padding: "96px 24px", background: "#fafaf9" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-              gap: 64,
-              alignItems: "center",
-            }}
-          >
-            {/* Immagine placeholder */}
+          <div className="two-col-grid">
             <div
               style={{
-                background: "#e5e7eb",
                 borderRadius: 8,
                 aspectRatio: "4/3",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontSize: "0.85rem",
-                color: "#9ca3af",
                 position: "relative",
                 overflow: "hidden",
               }}
             >
-              {/* Sostituisci con: <img src="/images/insufflaggio-cantiere.jpg" style={{width:'100%',height:'100%',objectFit:'cover'}} /> */}
-              <div style={{ textAlign: "center" }}>
-                <div style={{ fontSize: "3rem", marginBottom: 8 }}>🏗️</div>
-                <div>Foto cantiere</div>
-                <div style={{ fontSize: "0.75rem", marginTop: 4 }}>
-                  Inserisci immagine in /public/images/
-                </div>
-              </div>
+              <img
+                src={IMAGES.cantiere}
+                alt="Cantiere di insufflaggio termico"
+                style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+              />
               <div
                 style={{
                   position: "absolute",
@@ -829,14 +902,7 @@ export default function DMInsufflaggio() {
       {/* ── PERCHÉ NOI ── */}
       <section id="perche-noi" style={{ padding: "96px 24px", background: "white" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-              gap: 64,
-              alignItems: "center",
-            }}
-          >
+          <div className="two-col-grid">
             <div>
               <span className="section-label">La nostra differenza</span>
               <div className="green-line" />
@@ -909,42 +975,23 @@ export default function DMInsufflaggio() {
                 gap: 16,
               }}
             >
-              {[
-                { label: "Lavoro in corso", emoji: "🔧" },
-                { label: "Attrezzatura", emoji: "⚙️" },
-                { label: "Risultato finale", emoji: "🏠" },
-                { label: "Team", emoji: "👷" },
-              ].map((img) => (
+              {IMAGES.gallery.map((img) => (
                 <div
                   key={img.label}
                   style={{
-                    background: "#f3f4f6",
                     borderRadius: 6,
                     aspectRatio: "1",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontSize: "0.8rem",
-                    color: "#9ca3af",
-                    gap: 8,
+                    overflow: "hidden",
+                    position: "relative",
                   }}
                 >
-                  <span style={{ fontSize: "2rem" }}>{img.emoji}</span>
-                  <span>{img.label}</span>
+                  <img
+                    src={img.src}
+                    alt={img.label}
+                    style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                  />
                 </div>
               ))}
-              <div
-                style={{
-                  gridColumn: "span 2",
-                  fontSize: "0.75rem",
-                  color: "#9ca3af",
-                  textAlign: "center",
-                  paddingTop: 8,
-                }}
-              >
-                Sostituisci con immagini reali in /public/images/
-              </div>
             </div>
           </div>
         </div>
@@ -1108,6 +1155,7 @@ export default function DMInsufflaggio() {
             {FAQ.map((item, i) => (
               <div key={i} className="faq-item">
                 <button
+                  type="button"
                   className="faq-btn"
                   onClick={() => setFaqOpen(faqOpen === i ? null : i)}
                 >
@@ -1273,11 +1321,10 @@ export default function DMInsufflaggio() {
               Sostituisci action="https://formspree.io/f/XXXXXXXX"
             */}
             <form
-              action="https://formspree.io/f/INSERISCI_TUO_ID"
-              method="POST"
+              onSubmit={handleFormSubmit}
               style={{ display: "flex", flexDirection: "column", gap: 16 }}
             >
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+              <div className="form-grid">
                 <div>
                   <label style={labelStyle}>Nome e cognome *</label>
                   <input
