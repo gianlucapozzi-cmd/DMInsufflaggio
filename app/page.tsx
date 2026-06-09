@@ -378,17 +378,18 @@ export default function DMInsufflaggio() {
             justifyContent: "space-between",
           }}
         >
-          {/* LOGO — sostituisci con <img src="/images/logo.png" /> */}
-          <div
-            style={{
-              fontWeight: 900,
-              fontSize: "1.3rem",
-              color: scrolled ? "#111" : "white",
-              letterSpacing: "-0.02em",
-            }}
-          >
-            <span style={{ color: BRAND.color }}>DM</span> Insufflaggio
-          </div>
+          <a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }} aria-label="DM Insufflaggio">
+            <img
+              src="/images/logo.png"
+              alt="DM Insufflaggio - Isolamento termico e acustico"
+              style={{
+                height: scrolled ? 40 : 48,
+                width: "auto",
+                display: "block",
+                transition: "height 0.3s",
+              }}
+            />
+          </a>
 
           {/* Desktop nav */}
           <div
@@ -1379,16 +1380,11 @@ export default function DMInsufflaggio() {
           }}
         >
           <div>
-            <div
-              style={{
-                fontWeight: 900,
-                fontSize: "1.3rem",
-                color: "white",
-                marginBottom: 12,
-              }}
-            >
-              <span style={{ color: BRAND.color }}>DM</span> Insufflaggio
-            </div>
+            <img
+              src="/images/logo.png"
+              alt="DM Insufflaggio"
+              style={{ height: 72, width: "auto", marginBottom: 12, display: "block" }}
+            />
             <p style={{ lineHeight: 1.7, fontSize: "0.9rem", maxWidth: 280 }}>
               Isolamento termico e acustico professionale per case e condomini.
               Operiamo in tutta la Sardegna.
