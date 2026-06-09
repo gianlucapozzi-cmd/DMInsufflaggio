@@ -18,10 +18,6 @@ export const metadata: Metadata = {
   title: "DM Insufflaggio - Isolamento termico",
   description:
     "Isolamento termico e acustico professionale in Sardegna. Insufflaggio per case e condomini, sopralluogo gratuito e intervento rapido.",
-  icons: {
-    icon: "/favicon.jpg",
-    apple: "/favicon.jpg",
-  },
   openGraph: {
     title: "DM Insufflaggio - Isolamento termico",
     description:
