@@ -23,7 +23,7 @@ const BRAND = {
   tagline: "Isolamento termico e acustico in Sardegna",
   phone: "342 09 53 323",
   phoneHref: "tel:+393420953323",
-  email: "daniele.michittu1992@gmail.com",
+  email: "dminsufflaggio@gmail.com",
   instagram: "dminsufflaggio",
   instagramUrl: "https://www.instagram.com/dminsufflaggio",
   color: "#55b037",
@@ -1459,7 +1459,7 @@ export default function DMInsufflaggio() {
               Cookie Policy
             </a>
           </div>
-          © {new Date().getFullYear()} DM Insufflaggio — P.IVA: [da inserire] — Sardegna, Italia
+          © {new Date().getFullYear()} DM Insufflaggio — P.IVA: 04145350924 — Sardegna, Italia
         </div>
       </footer>
 
