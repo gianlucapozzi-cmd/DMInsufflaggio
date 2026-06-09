@@ -162,6 +162,25 @@ export default function DMInsufflaggio() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    if (document.querySelector('script[src="https://cdn.iubenda.com/iubenda.js"]')) return;
+
+    const loader = () => {
+      const s = document.createElement("script");
+      const tag = document.getElementsByTagName("script")[0];
+      s.src = "https://cdn.iubenda.com/iubenda.js";
+      tag?.parentNode?.insertBefore(s, tag);
+    };
+
+    if (document.readyState === "complete") {
+      loader();
+      return;
+    }
+
+    window.addEventListener("load", loader, false);
+    return () => window.removeEventListener("load", loader, false);
+  }, []);
+
   const scrollTo = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
     setMenuOpen(false);
@@ -1328,8 +1347,8 @@ export default function DMInsufflaggio() {
                 I tuoi dati sono al sicuro e non vengono ceduti a terzi. Consulta la{" "}
                 <a
                   href={BRAND.privacyUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  className="iubenda-noiframe iubenda-embed"
+                  title="Privacy Policy "
                   style={{ color: BRAND.color, textDecoration: "underline" }}
                 >
                   Privacy Policy
@@ -1444,17 +1463,16 @@ export default function DMInsufflaggio() {
           <div style={{ marginBottom: 10 }}>
             <a
               href={BRAND.privacyUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ color: "rgba(255,255,255,0.75)", textDecoration: "none", marginRight: 16 }}
+              className="iubenda-white iubenda-noiframe iubenda-embed"
+              title="Privacy Policy "
+              style={{ marginRight: 16 }}
             >
               Privacy Policy
             </a>
             <a
               href={BRAND.cookieUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ color: "rgba(255,255,255,0.75)", textDecoration: "none" }}
+              className="iubenda-white iubenda-noiframe iubenda-embed"
+              title="Cookie Policy "
             >
               Cookie Policy
             </a>
