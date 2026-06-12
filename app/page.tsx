@@ -382,18 +382,6 @@ export default function DMInsufflaggio() {
           align-items: center;
         }
 
-        .perche-noi-grid {
-          align-items: start;
-        }
-
-        .perche-noi-gallery {
-          margin-top: 72px;
-        }
-
-        .perche-noi-gallery > div:nth-child(odd) {
-          margin-top: 40px;
-        }
-
         .form-grid {
           display: grid;
           grid-template-columns: 1fr 1fr;
@@ -466,8 +454,6 @@ export default function DMInsufflaggio() {
           .nav-desktop { display: none; }
           .nav-mobile-btn { display: block; }
           .two-col-grid { grid-template-columns: 1fr; gap: 32px; }
-          .perche-noi-gallery { margin-top: 0; }
-          .perche-noi-gallery > div:nth-child(odd) { margin-top: 0; }
           .form-grid { grid-template-columns: 1fr; }
         }
       `}</style>
@@ -932,7 +918,7 @@ export default function DMInsufflaggio() {
       {/* ── PERCHÉ NOI ── */}
       <section id="perche-noi" style={{ padding: "96px 24px", background: "white" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <div className="two-col-grid perche-noi-grid">
+          <div className="two-col-grid">
             <div>
               <span className="section-label">La nostra differenza</span>
               <div className="green-line" />
@@ -999,7 +985,6 @@ export default function DMInsufflaggio() {
 
             {/* Foto team/lavoro */}
             <div
-              className="perche-noi-gallery"
               style={{
                 display: "grid",
                 gridTemplateColumns: "1fr 1fr",
