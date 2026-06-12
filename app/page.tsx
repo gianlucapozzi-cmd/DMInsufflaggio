@@ -42,6 +42,8 @@ const IMAGES = {
       src: "/images/photo-1.jpg",
       label: "Intervento in cantiere",
       alt: "Operatore DM Insufflaggio durante un intervento di isolamento",
+      objectPosition: "center top",
+      marginTop: 0,
     },
     {
       src: "/images/photo-2.jpg",
@@ -55,6 +57,7 @@ const IMAGES = {
       alt: "Attrezzatura utilizzata per l'insufflaggio delle pareti",
       objectPosition: "center top",
       marginTop: 0,
+      scale: 1.1,
     },
     {
       src: "/images/photo-4.jpg",
@@ -1008,7 +1011,7 @@ export default function DMInsufflaggio() {
               {IMAGES.gallery.map((img, index) => (
                 <div
                   key={img.label}
-                  className={img.src.includes("photo-3") ? "perche-noi-gallery-item--left" : undefined}
+                  className={index % 2 === 0 ? "perche-noi-gallery-item--left" : undefined}
                   style={{
                     borderRadius: 6,
                     aspectRatio: "1",
@@ -1025,6 +1028,8 @@ export default function DMInsufflaggio() {
                       objectFit: "cover",
                       objectPosition: img.objectPosition ?? "center center",
                       marginTop: img.marginTop ?? undefined,
+                      transform: img.scale ? `scale(${img.scale})` : undefined,
+                      transformOrigin: img.scale ? "center top" : undefined,
                       display: "block",
                     }}
                   />
