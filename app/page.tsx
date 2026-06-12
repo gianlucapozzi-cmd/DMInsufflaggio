@@ -189,6 +189,7 @@ export default function DMInsufflaggio() {
   const [faqOpen, setFaqOpen] = useState<number | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [formStatus, setFormStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -224,33 +225,37 @@ export default function DMInsufflaggio() {
     setMenuOpen(false);
   };
 
-  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setFormStatus("submitting");
+
     const formData = new FormData(e.currentTarget);
-    const nome = String(formData.get("nome") ?? "");
-    const telefono = String(formData.get("telefono") ?? "");
-    const email = String(formData.get("email") ?? "");
-    const comune = String(formData.get("comune") ?? "");
-    const tipo = String(formData.get("tipo") ?? "Non specificato");
-    const messaggio = String(formData.get("messaggio") ?? "");
+    const payload = {
+      nome: String(formData.get("nome") ?? ""),
+      telefono: String(formData.get("telefono") ?? ""),
+      email: String(formData.get("email") ?? ""),
+      comune: String(formData.get("comune") ?? ""),
+      tipo: String(formData.get("tipo") ?? ""),
+      messaggio: String(formData.get("messaggio") ?? ""),
+    };
 
-    const body = [
-      "Richiesta sopralluogo gratuito",
-      "",
-      `Nome: ${nome}`,
-      `Telefono: ${telefono}`,
-      `Email: ${email || "Non indicata"}`,
-      `Comune/Zona: ${comune}`,
-      `Tipo edificio: ${tipo}`,
-      "",
-      messaggio ? `Messaggio:\n${messaggio}` : "",
-    ]
-      .filter(Boolean)
-      .join("\n");
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
 
-    window.location.href = `mailto:${BRAND.email}?subject=${encodeURIComponent(
-      "Richiesta sopralluogo - DM Insufflaggio"
-    )}&body=${encodeURIComponent(body)}`;
+      if (!response.ok) {
+        setFormStatus("error");
+        return;
+      }
+
+      setFormStatus("success");
+      e.currentTarget.reset();
+    } catch {
+      setFormStatus("error");
+    }
   };
 
   return (
@@ -1358,11 +1363,6 @@ export default function DMInsufflaggio() {
               Invia una richiesta di sopralluogo
             </h3>
 
-            {/* 
-              NOTA PER CURSOR:
-              Per il form, integra con Formspree (formspree.io) o Resend.
-              Sostituisci action="https://formspree.io/f/XXXXXXXX"
-            */}
             <form
               onSubmit={handleFormSubmit}
               style={{ display: "flex", flexDirection: "column", gap: 16 }}
@@ -1430,9 +1430,31 @@ export default function DMInsufflaggio() {
                 />
               </div>
 
-              <button type="submit" className="btn-primary" style={{ padding: "16px", fontSize: "1rem" }}>
-                Invia richiesta gratuita
+              <button
+                type="submit"
+                className="btn-primary"
+                disabled={formStatus === "submitting"}
+                style={{
+                  padding: "16px",
+                  fontSize: "1rem",
+                  opacity: formStatus === "submitting" ? 0.7 : 1,
+                  cursor: formStatus === "submitting" ? "wait" : "pointer",
+                }}
+              >
+                {formStatus === "submitting" ? "Invio in corso..." : "Invia richiesta gratuita"}
               </button>
+
+              {formStatus === "success" && (
+                <p style={{ color: BRAND.color, fontWeight: 600, textAlign: "center", fontSize: "0.95rem" }}>
+                  Richiesta inviata con successo. Ti contatteremo al più presto.
+                </p>
+              )}
+
+              {formStatus === "error" && (
+                <p style={{ color: "#dc2626", fontWeight: 600, textAlign: "center", fontSize: "0.95rem" }}>
+                  Invio non riuscito. Riprova o chiamaci direttamente al {BRAND.phone}.
+                </p>
+              )}
 
               <p style={{ fontSize: "0.78rem", color: "#9ca3af", textAlign: "center" }}>
                 I tuoi dati sono al sicuro e non vengono ceduti a terzi. Consulta la{" "}
