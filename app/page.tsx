@@ -42,21 +42,25 @@ const IMAGES = {
       src: "/images/photo-1.jpg",
       label: "Intervento in cantiere",
       alt: "Operatore DM Insufflaggio durante un intervento di isolamento",
+      objectPosition: "center 75%",
     },
     {
       src: "/images/photo-2.jpg",
       label: "Lavoro sul campo",
       alt: "Fase operativa di un intervento di insufflaggio termico",
+      objectPosition: "center center",
     },
     {
       src: "/images/photo-3.jpg",
       label: "Attrezzatura professionale",
       alt: "Attrezzatura utilizzata per l'insufflaggio delle pareti",
+      objectPosition: "center 75%",
     },
     {
       src: "/images/photo-4.jpg",
       label: "Risultato del lavoro",
       alt: "Dettaglio di un intervento di isolamento termico completato",
+      objectPosition: "center center",
     },
   ],
 };
@@ -1004,7 +1008,13 @@ export default function DMInsufflaggio() {
                   <img
                     src={img.src}
                     alt={img.alt}
-                    style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                      objectPosition: img.objectPosition ?? "center center",
+                      display: "block",
+                    }}
                   />
                 </div>
               ))}
