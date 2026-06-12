@@ -42,7 +42,8 @@ const IMAGES = {
       src: "/images/photo-1.jpg",
       label: "Intervento in cantiere",
       alt: "Operatore DM Insufflaggio durante un intervento di isolamento",
-      objectPosition: "center 75%",
+      objectPosition: "center top",
+      marginTop: 0,
     },
     {
       src: "/images/photo-2.jpg",
@@ -54,7 +55,8 @@ const IMAGES = {
       src: "/images/photo-3.jpg",
       label: "Attrezzatura professionale",
       alt: "Attrezzatura utilizzata per l'insufflaggio delle pareti",
-      objectPosition: "center 75%",
+      objectPosition: "center top",
+      marginTop: 0,
     },
     {
       src: "/images/photo-4.jpg",
@@ -384,6 +386,15 @@ export default function DMInsufflaggio() {
           grid-template-columns: 1fr 1fr;
           gap: 64px;
           align-items: center;
+        }
+
+        .perche-noi-gallery {
+          align-content: start;
+        }
+
+        .perche-noi-gallery-item--left {
+          align-self: start;
+          margin-top: 0;
         }
 
         .form-grid {
@@ -989,15 +1000,17 @@ export default function DMInsufflaggio() {
 
             {/* Foto team/lavoro */}
             <div
+              className="perche-noi-gallery"
               style={{
                 display: "grid",
                 gridTemplateColumns: "1fr 1fr",
                 gap: 16,
               }}
             >
-              {IMAGES.gallery.map((img) => (
+              {IMAGES.gallery.map((img, index) => (
                 <div
                   key={img.label}
+                  className={index % 2 === 0 ? "perche-noi-gallery-item--left" : undefined}
                   style={{
                     borderRadius: 6,
                     aspectRatio: "1",
@@ -1013,6 +1026,7 @@ export default function DMInsufflaggio() {
                       height: "100%",
                       objectFit: "cover",
                       objectPosition: img.objectPosition ?? "center center",
+                      marginTop: img.marginTop ?? undefined,
                       display: "block",
                     }}
                   />
