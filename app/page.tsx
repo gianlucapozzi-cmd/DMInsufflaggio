@@ -35,28 +35,28 @@ const BRAND = {
 };
 
 const IMAGES = {
-  hero: "/images/hero-bg.jpg",
-  cantiere: "/images/insufflaggio-cantiere.jpg",
+  hero: "/images/hero.jpg",
+  cantiere: "/images/cose.jpg",
   gallery: [
     {
-      src: "/images/gallery-lavoro.jpg",
-      label: "Isolamento in intercapedine",
-      alt: "Materiale isolante iniettato nella cavità di una parete",
+      src: "/images/photo-1.jpg",
+      label: "Intervento in cantiere",
+      alt: "Operatore DM Insufflaggio durante un intervento di isolamento",
     },
     {
-      src: "/images/gallery-attrezzatura.jpg",
-      label: "Parete in lavorazione",
-      alt: "Intervento di isolamento termico all'interno di una parete",
+      src: "/images/photo-2.jpg",
+      label: "Lavoro sul campo",
+      alt: "Fase operativa di un intervento di insufflaggio termico",
     },
     {
-      src: "/images/gallery-risultato.jpg",
-      label: "Isolamento installato",
-      alt: "Parete con isolante termico posizionato tra le murature",
+      src: "/images/photo-3.jpg",
+      label: "Attrezzatura professionale",
+      alt: "Attrezzatura utilizzata per l'insufflaggio delle pareti",
     },
     {
-      src: "/images/gallery-team.jpg",
-      label: "Cantiere isolamento",
-      alt: "Operai al lavoro su un cantiere di isolamento termico",
+      src: "/images/photo-4.jpg",
+      label: "Risultato del lavoro",
+      alt: "Dettaglio di un intervento di isolamento termico completato",
     },
   ],
 };
@@ -733,7 +733,7 @@ export default function DMInsufflaggio() {
             >
               <img
                 src={IMAGES.cantiere}
-                alt="Edificio in fase di isolamento termico con materiale nelle pareti"
+                alt="Intervento di insufflaggio termico eseguito da DM Insufflaggio"
                 style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
               />
               <div
