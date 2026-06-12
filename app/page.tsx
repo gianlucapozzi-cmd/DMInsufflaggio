@@ -42,8 +42,6 @@ const IMAGES = {
       src: "/images/photo-1.jpg",
       label: "Intervento in cantiere",
       alt: "Operatore DM Insufflaggio durante un intervento di isolamento",
-      objectPosition: "center top",
-      marginTop: 0,
     },
     {
       src: "/images/photo-2.jpg",
@@ -1010,7 +1008,7 @@ export default function DMInsufflaggio() {
               {IMAGES.gallery.map((img, index) => (
                 <div
                   key={img.label}
-                  className={index % 2 === 0 ? "perche-noi-gallery-item--left" : undefined}
+                  className={img.src.includes("photo-3") ? "perche-noi-gallery-item--left" : undefined}
                   style={{
                     borderRadius: 6,
                     aspectRatio: "1",
