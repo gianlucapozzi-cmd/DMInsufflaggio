@@ -1391,10 +1391,11 @@ export default function DMInsufflaggio() {
               </div>
 
               <div>
-                <label style={labelStyle}>Email</label>
+                <label style={labelStyle}>Email *</label>
                 <input
                   name="email"
                   type="email"
+                  required
                   placeholder="mario@email.com"
                   style={inputStyle}
                 />
