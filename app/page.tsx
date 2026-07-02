@@ -227,9 +227,10 @@ export default function DMInsufflaggio() {
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const form = e.currentTarget;
     setFormStatus("submitting");
 
-    const formData = new FormData(e.currentTarget);
+    const formData = new FormData(form);
     const payload = {
       nome: String(formData.get("nome") ?? ""),
       telefono: String(formData.get("telefono") ?? ""),
@@ -252,7 +253,7 @@ export default function DMInsufflaggio() {
       }
 
       setFormStatus("success");
-      e.currentTarget.reset();
+      form.reset();
     } catch {
       setFormStatus("error");
     }
